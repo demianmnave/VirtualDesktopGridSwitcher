@@ -454,7 +454,7 @@ namespace VirtualDesktopGridSwitcher {
             if (activeHwnd != activatingBrowserWindow) {
                 activeWindows[Current] = activeHwnd;
             }
-            WinAPI.PostMessage(activeHwnd, WinAPI.WM_KILLFOCUS, IntPtr.Zero, IntPtr.Zero);
+            //WinAPI.PostMessage(activeHwnd, WinAPI.WM_KILLFOCUS, IntPtr.Zero, IntPtr.Zero);
             Debug.WriteLine("Switch Active " + Current + " (" + activeWindows[Current] + ") to " + index + " (" + activeWindows[index] + ")");
             Current = index;
         }
