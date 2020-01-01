@@ -1,0 +1,11 @@
+/.project
+/.vs
+/bin/Release
+/VirtualDesktopGridSwitcher/obj
+/VirtualDesktopGridSwitcher/publish
+/packages/Source.JetBrains.Annotations.11.1.1/.signature.p7s
+/packages/Source.JetBrains.Annotations.11.1.1/Source.JetBrains.Annotations.11.1.1.nupkg
+/packages/Source.JetBrains.Annotations.11.1.1/content/App_Packages/Source.JetBrains.Annotations_11.1.1/JetBrains.Annotations.cs
+*.csproj.user
+/VirtualDesktopGridSwitcher/VirtualDesktopGridSwitcher_TemporaryKey.pfx
+/publish
