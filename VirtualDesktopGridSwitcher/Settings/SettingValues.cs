@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -153,8 +154,20 @@ namespace VirtualDesktopGridSwitcher.Settings {
         public static SettingValues Load() {
             SettingValues settings;
             bool firstRun = false;
+            //System.Windows.Storage.StorageFolder localFolder =
+            //    Windows.Storage.ApplicationData.Current.LocalFolder;
             using (IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Domain | IsolatedStorageScope.Assembly, null, null)) {
                 if (!isoStore.FileExists(SettingsFileName)) {
+
+                    var existingSettings = 
+                        FindExistingSettings();
+
+                    if (existingSettings.Any()) {
+                        
+                        
+
+                    }
+
                     settings = new SettingValues();
                     firstRun = true;
                 } else {
@@ -172,6 +185,22 @@ namespace VirtualDesktopGridSwitcher.Settings {
             settings.ApplyVersionUpdates(firstRun);
 
             return settings;
+        }
+
+        private static List<string> FindExistingSettings() {
+            var existingSettings = new List<string>();
+            var connection = new OleDbConnection(@"Provider=Search.CollatorDSO;Extended Properties=""Application=Windows""");
+            var query = @"SELECT System.ItemUrl FROM SystemIndex " +
+                                @"WHERE scope ='file:C:/' AND System.ItemName = 'VirtualDesktopGridSwitcher.Settings'";
+            connection.Open();
+            var command = new OleDbCommand(query, connection);
+            using (var r = command.ExecuteReader()) {
+                while (r.Read()) {
+                    existingSettings.Add((string)r[0]);
+                }
+            }
+            connection.Close();
+            return existingSettings;
         }
 
         private void ApplyVersionUpdates(bool firstRun) {
